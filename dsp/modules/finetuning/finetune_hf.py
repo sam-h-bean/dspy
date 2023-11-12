@@ -351,11 +351,14 @@ def finetune_hf(data_path, target, config):
         else:
             if config['fid']:
                 device = accelerator.device
-                t5 = AutoModelClass.from_pretrained(target, device=device)
+                t5 = AutoModelClass.from_pretrained(target)
+                t5.to(device)
                 model = FiDT5(t5.config)
                 model.load_t5(t5.state_dict())
             else:
-                model = AutoModelClass.from_pretrained(target, device=device)
+                device = accelerator.device
+                model = AutoModelClass.from_pretrained(target)
+                model.to(device)
 
         # load tokenizer
         tokenizer = AutoTokenizer.from_pretrained(target)

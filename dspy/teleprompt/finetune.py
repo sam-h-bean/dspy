@@ -31,7 +31,7 @@ TODO: Reduce and document the dependencies.
 
 # !pip install evaluate
 # !pip install tensorboardX
-# !pip install transformers[torch]
+# !pip install transformers[torch,deepspeed]
 # !pip install accelerate -U
 # !pip install rouge_score
 

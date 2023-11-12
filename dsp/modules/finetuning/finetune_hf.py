@@ -195,7 +195,7 @@ def _train_seq2seq(model, tokenizer, tokenized_dataset, metric, config):
         predict_with_generate=True,
         learning_rate=config['lr'], #1e-4, # 5e-5
         num_train_epochs=config['epochs'],
-        deepspeed="/databricks/driver/ds_config.json",
+        deepspeed="/databricks/driver/dsconfiger.json",
         # logging & evaluation strategies
         log_level="error",
         logging_dir=f"{config['output_dir']}/logs",
@@ -277,7 +277,7 @@ def _train_causal(model, tokenizer, tokenized_dataset, metric, config):
         per_device_eval_batch_size=config['batch_size'],
         learning_rate=config['lr'], #1e-4,# 5e-5
         num_train_epochs=config['epochs'],
-        deepspeed="/databricks/driver/ds_config.json",
+        deepspeed="/databricks/driver/dsconfiger.json",
         # logging & evaluation strategies
         log_level="error",
         logging_dir=f"{config['output_dir']}/logs",

@@ -24,10 +24,14 @@ from transformers import (
     Seq2SeqTrainingArguments,
     DataCollatorForSeq2Seq,
 )
-# from peft import get_peft_model, LoraConfig, TaskType
+from peft import get_peft_model, LoraConfig, TaskType
+from accelerate import Accelerator
 from transformers.trainer_callback import TrainerCallback
 
 # from dsp.modules.finetuning.fid import *
+
+
+accelerator = Accelerator()
 
 
 warnings.filterwarnings("ignore")
@@ -346,12 +350,12 @@ def finetune_hf(data_path, target, config):
             model.print_trainable_parameters()
         else:
             if config['fid']:
-                t5 = AutoModelClass.from_pretrained(target)
+                device = accelerator.device
+                t5 = AutoModelClass.from_pretrained(target, device=device)
                 model = FiDT5(t5.config)
                 model.load_t5(t5.state_dict())
             else:
-                model = AutoModelClass.from_pretrained(target)
-                # model = _freeze_model_layers(model, unfreeze_last_n=2)
+                model = AutoModelClass.from_pretrained(target, device=device)
 
         # load tokenizer
         tokenizer = AutoTokenizer.from_pretrained(target)

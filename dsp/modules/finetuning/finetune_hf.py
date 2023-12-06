@@ -362,6 +362,7 @@ def finetune_hf(data_path, target, config):
         tokenized_dataset = _tokenize_dataset(dataset, tokenizer, encoder_decoder_model, decoder_only_model)
         tokenized_dataset = tokenized_dataset.train_test_split(test_size=0.1)
         print(f'Finetuning dataset: {tokenized_dataset}')
+        tokenized_dataset.save_to_disk("/dbfs/some/dataset/")
 
         # start training
         metric = evaluate.load("rouge")
